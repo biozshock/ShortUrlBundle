@@ -1,0 +1,3 @@
+BumzShortUrlBundle_homepage:
+    pattern:  /~{url}
+    defaults: { _controller: BumzShortUrlBundle:Short:short }

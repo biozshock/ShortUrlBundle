@@ -1,0 +1,18 @@
+parameters:
+    bumz_short_url.shortener_base.class: Bumz\ShortUrlBundle\Service\Shortener\BaseShortener
+    bumz_short_url.shortener.class: Bumz\ShortUrlBundle\Service\Shortener
+    bumz_short_url.twig.extension.class: Bumz\ShortUrlBundle\Extensions\ShortenTwigExtension
+
+services:
+    bumz_short_url.shortener_base:
+        class: %bumz_short_url.shortener_base.class%
+
+    bumz_short_url.shortener:
+        class: %bumz_short_url.shortener.class%
+        arguments: [@bumz_short_url.shortener.base, @doctrine.orm.entity_manager]
+
+    bumz_short_url.twig.extension:
+            class: %bumz_short_url.twig.extension.class%
+            arguments: [@bumz_short_url.shortener]
+            tags:
+                -  { name: twig.extension }

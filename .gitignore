@@ -5,5 +5,5 @@
 /composer.phar
 /composer.lock
 /vendor
-./Tests/Fixtures/app/logs
-./Tests/Fixtures/app/cache
+/Tests/Fixtures/app/logs
+/Tests/Fixtures/app/cache

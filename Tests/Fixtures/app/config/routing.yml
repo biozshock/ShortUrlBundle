@@ -1,0 +1,4 @@
+
+BumzShortUrlBundle:
+    resource: "@BumzShortUrlBundle/Resources/config/routing.yml"
+    prefix:   /

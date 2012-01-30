@@ -1,0 +1,34 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+doctrine:
+    dbal:
+        driver:    pdo_sqlite
+        host:      localhost
+        dbname:    db_test
+        user:      db_user
+        password:  db_pwd
+        charset:   UTF8
+        memory:    true
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        firephp:
+            type: firephp
+            level: info

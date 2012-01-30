@@ -19,8 +19,13 @@
         </testsuite>
     </testsuites>
     <php>
-        <server name="KERNEL_DIR" value="Tests/Fixtures/app" />
-        <server name="COMPOSER_DIR" value="vendor/.composer" />
+        <!-- uncomment this if you want to test only this bundle -->
+
+        <!--<server name="KERNEL_DIR" value="Tests/Fixtures/app" />
+        <server name="COMPOSER_DIR" value="vendor/.composer" /> -->
+
+        <!-- Uncomment if you are using full framework -->
+        <!-- <server name="KERNEL_DIR" value="../../../../../app" /> -->
     </php>
 
     <filter>

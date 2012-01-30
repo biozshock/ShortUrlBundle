@@ -19,7 +19,8 @@
         </testsuite>
     </testsuites>
     <php>
-        <server name="KERNEL_DIR" value="../../../../app" />
+        <server name="KERNEL_DIR" value="Tests/Fixtures/app" />
+        <server name="COMPOSER_DIR" value="vendor/.composer" />
     </php>
 
     <filter>

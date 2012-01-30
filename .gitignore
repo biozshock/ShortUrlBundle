@@ -3,4 +3,7 @@
 /.buildpath
 /.idea
 /composer.phar
+/composer.lock
 /vendor
+./Tests/Fixtures/app/logs
+./Tests/Fixtures/app/cache

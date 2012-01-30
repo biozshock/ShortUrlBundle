@@ -89,7 +89,7 @@ class ShortControllerTest extends WebTestCase
             $tool = new SchemaTool($this->em);
             $tool->createSchema($metadatas);
         } else {
-            throw new Doctrine\DBAL\Schema\SchemaException('No Metadata Classes to process.');
+            throw new \Doctrine\DBAL\Schema\SchemaException('No Metadata Classes to process.');
         }
     }
 

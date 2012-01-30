@@ -1,0 +1,24 @@
+{
+    "name": "biozshock/short-url-bundle",
+    "description": "Provides a service and twig extension for getting short urls like http://your.host/~short",
+    "keywords": ["url", "short url", "shortener"],
+    "homepage": "https://github.com/biozshock/ShortUrlBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artem Lopata",
+            "email": "biozshock@gmail.com",
+            "homepage": "http://biozshock.com/"
+        }
+    ],
+    "require": {
+        "php":             ">=5.3.2",
+        "symfony/symfony": ">=2.1.0-dev",
+        "doctrine/doctrine-bundle": ">=2.1"
+    },
+    "autoload": {
+        "psr-0": { "Bumz\\ShortUrlBundle": "" }
+    },
+    "target-dir": "Bumz/ShortUrlBundle"
+}

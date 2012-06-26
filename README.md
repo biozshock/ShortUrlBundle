@@ -13,7 +13,7 @@ Installation
 Add the following lines in your deps file:
 
     [BumzShortUrlBundle]
-        git=git://github.com/bumz/ShortUrlBundle.git
+        git=git://github.com/biozshock/ShortUrlBundle.git
         target=bundles/Bumz/ShortUrlBundle
 
 Run the vendors script:

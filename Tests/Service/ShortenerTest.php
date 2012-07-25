@@ -180,4 +180,76 @@ class ShortenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $shortener->setClick());
     }
 
+    /**
+     * Tests short url will be exact length as given
+     *
+     * @return void
+     */
+    public function testShortenDoNotIncreaseLengthWhenLongAlreadyExists()
+    {
+        $longUrl = 'http://example.com/url';
+        $longUrlAnother = 'http://example.com/url/another';
+        $shortUrl = 'TuO';
+        $shortUrlAnother = 'TuOt';
+
+        $urlObject = new \Bumz\ShortUrlBundle\Entity\ShortUrl();
+        $urlObject->setLong($longUrl);
+        $urlObject->setShort($shortUrl);
+
+        $shortenerClass = $this->getMock('\Bumz\ShortUrlBundle\Service\Shortener\BaseShortener');
+
+        $shortenerClass->expects($this->once())
+            ->method('shorten')
+            ->with($longUrlAnother)
+            ->will($this->returnCallback(function() use (&$shortUrlAnother) {
+
+            return $shortUrlAnother;
+        }));
+
+        $shortenerClass->expects($this->never())
+            ->method('increaseShortLength');
+
+        $entityManager = $this->getMock('\Doctrine\ORM\EntityManager', array(), array(), '', false);
+
+        $metadataMock = $this->getMock(
+            '\Doctrine\ORM\Mapping\ClassMetadata',
+            array(),
+            array('\Bumz\ShortUrlBundle\Entity\ShortUrl')
+        );
+
+        $repository = $this->getMock('\Doctrine\ORM\EntityRepository', array(), array($entityManager, $metadataMock));
+
+        $repository->expects($this->exactly(3))
+            ->method('findOneBy')
+            ->with($this->logicalOr(
+                $this->equalTo(array('short' => &$shortUrlAnother)),
+                $this->equalTo(array('long' => &$longUrl)),
+                $this->equalTo(array('long' => &$longUrlAnother))
+            ))
+            ->will($this->returnCallback(function($argument) use (&$longUrl, &$urlObject) {
+
+            if (isset($argument['short'])) {
+                return null;
+            } elseif (isset($argument['long'])) {
+                return ($longUrl == $argument['long']) ? $urlObject : null;
+            }
+
+            throw new \InvalidArgumentException('Invalid argument supplied for test');
+
+        }));
+
+        $entityManager->expects($this->exactly(3))
+            ->method('getRepository')
+            ->with('BumzShortUrlBundle:ShortUrl')
+            ->will($this->returnValue($repository));
+
+        $shortener = new Shortener($shortenerClass, $entityManager);
+        $shortResult = $shortener->shorten($longUrl);
+
+        $this->assertEquals('/~' . $shortUrl, $shortResult);
+
+        $shortResult = $shortener->shorten($longUrlAnother);
+        $this->assertEquals('/~' . $shortUrlAnother, $shortResult);
+    }
+
 }

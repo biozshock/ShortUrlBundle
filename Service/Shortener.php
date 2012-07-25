@@ -58,6 +58,10 @@ class Shortener
      */
     public function shorten($url)
     {
+        if ($urlObject = $this->getUrl($url)) {
+            return '/~' . $urlObject->getShort();
+        }
+
         $repository = $this->em->getRepository('BumzShortUrlBundle:ShortUrl');
 
         while (true) {
@@ -103,6 +107,12 @@ class Shortener
         }
 
         return $this->lastUrl->getClicks();
+    }
+
+    private function getUrl($longUrl)
+    {
+        $repository = $this->em->getRepository('BumzShortUrlBundle:ShortUrl');
+        return $repository->findOneBy(array('long' => $longUrl));
     }
 
     /**

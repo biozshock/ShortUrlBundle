@@ -58,6 +58,7 @@ class Shortener
      */
     public function shorten($url)
     {
+
         if ($urlObject = $this->getUrl($url)) {
             return '/~' . $urlObject->getShort();
         }

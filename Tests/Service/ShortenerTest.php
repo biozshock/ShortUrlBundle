@@ -53,12 +53,24 @@ class ShortenerTest extends \PHPUnit_Framework_TestCase
         );
 
         $repository = $this->getMock('\Doctrine\ORM\EntityRepository', array(), array($entityManager, $metadataMock));
-        $repository->expects($this->once())
-                ->method('findOneBy')
-                ->with(array('short' => $shortUrl))
-                ->will($this->returnValue(null));
 
-        $entityManager->expects($this->once())
+
+        $repository->expects($this->exactly(2))
+                ->method('findOneBy')
+                ->will($this->returnCallback(function($searchTerm) use ($shortUrl, $longUrl) {
+
+                    if ($searchTerm == array('short' => $shortUrl)) {
+                        return null;
+                    }
+
+                    if ($searchTerm == array('long' => $longUrl)) {
+                        return null;
+                    }
+
+                    throw new \InvalidArgumentException;
+                }));
+
+        $entityManager->expects($this->exactly(2))
                     ->method('getRepository')
                     ->with('BumzShortUrlBundle:ShortUrl')
                     ->will($this->returnValue($repository));
@@ -102,10 +114,13 @@ class ShortenerTest extends \PHPUnit_Framework_TestCase
         );
 
         $repository = $this->getMock('\Doctrine\ORM\EntityRepository', array(), array($entityManager, $metadataMock));
-        $repository->expects($this->exactly(2))
+        $repository->expects($this->exactly(3))
             ->method('findOneBy')
-            ->with(array('short' => &$shortUrl))
-            ->will($this->returnCallback(function() use (&$shortUrl) {
+            ->will($this->returnCallback(function($searchTerm) use (&$shortUrl, $longUrl) {
+
+                if ($searchTerm == array('long' => $longUrl)) {
+                    return null;
+                }
 
                 if (strlen($shortUrl) == 3) {
                     $shortUrl .= 'T';
@@ -115,7 +130,7 @@ class ShortenerTest extends \PHPUnit_Framework_TestCase
                 return null;
             }));
 
-        $entityManager->expects($this->once())
+        $entityManager->expects($this->exactly(2))
             ->method('getRepository')
             ->with('BumzShortUrlBundle:ShortUrl')
             ->will($this->returnValue($repository));

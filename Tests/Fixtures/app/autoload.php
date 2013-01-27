@@ -3,7 +3,7 @@
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $vendorDir = __DIR__.'/../../../vendor';
-$loader = require_once $vendorDir . '/.composer/autoload.php';
+$loader = require_once $vendorDir . '/autoload.php';
 
 // intl
 if (!function_exists('intl_get_error_code')) {
@@ -17,8 +17,5 @@ AnnotationRegistry::registerLoader(function($class) use ($loader) {
 });
 AnnotationRegistry::registerFile($vendorDir . '/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
 
-// Swiftmailer needs a special autoloader to allow
-// the lazy loading of the init file (which is expensive)
-require_once $vendorDir . '/swiftmailer/swiftmailer/lib/classes/Swift.php';
-Swift::registerAutoload($vendorDir . '/swiftmailer/swiftmailer/lib/swift_init.php');
+
 

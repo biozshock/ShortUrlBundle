@@ -26,7 +26,7 @@ class ShortController extends Controller
      *
      * @param string $url A short url to be redirected to
      *
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function shortAction($url)
@@ -34,7 +34,7 @@ class ShortController extends Controller
         $longUrl = $this->get('bumz_short_url.shortener')->getLong($url);
 
         if (!$longUrl) {
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No short url found ' . $url);
         }
 
         $this->get('bumz_short_url.shortener')->setClick();

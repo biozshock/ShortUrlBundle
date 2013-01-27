@@ -7,3 +7,4 @@
 /vendor
 /Tests/Fixtures/app/logs
 /Tests/Fixtures/app/cache
+/phpunit.xml

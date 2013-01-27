@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM,
  *
  * @ORM\Entity
  * @ORM\Table(name="ShortUrl",indexes={
- *      @ORM\index(columns={"shortUrl", "clicks"})
+ *      @ORM\Index(columns={"shortUrl", "clicks"})
  * })
  */
 class ShortUrl

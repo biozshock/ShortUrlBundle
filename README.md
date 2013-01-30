@@ -3,6 +3,8 @@ ShortUrlBundle
 
 This bundle provides a service and twig extension for getting short urls like http://your.host/~short
 
+[![Build Status](https://travis-ci.org/biozshock/ShortUrlBundle.png)](https://travis-ci.org/biozshock/ShortUrlBundle)
+
 Installation
 ============
 

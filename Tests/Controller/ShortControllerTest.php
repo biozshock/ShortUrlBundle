@@ -39,12 +39,14 @@ class ShortControllerTest extends WebTestCase
         parent::setUp();
     }
 
-    /**
-     * @expects \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
     public function testUnknownUrlWillBeNotFound()
     {
+        //TODO: make something so exception text will not appear in phpunit
         $this->client->request('GET', '/~nonexistent');
+
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+
+
     }
 
     /**
